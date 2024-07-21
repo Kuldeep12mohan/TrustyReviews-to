@@ -1,18 +1,19 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { FaPlus, FaTree } from "react-icons/fa";
 import { useMyContext } from "@/context";
 import { NavBar } from "@/components/NavBar";
 import Card from "@/components/Card";
 import { useRouter } from "next/navigation";
-
+import SpaceCard from "@/components/SpaceCard";
 const Dashboard = () => {
   const { isDarkMode } = useMyContext();
   const router = useRouter();
+  const [spaces, setSpaces] = useState(true);
 
   return (
     <div
-      className={`py-2 ${
+      className={`min-h-screen py-2 ${
         isDarkMode ? "bg-slate-950 text-white" : "bg-white text-black"
       }`}
     >
@@ -32,16 +33,20 @@ const Dashboard = () => {
             <span className="hidden md:block">Create a new space</span>
           </button>
         </div>
-        <div className="flex justify-center my-10">
-          <div className="text-center">
-            <FaTree size={200} className="mx-auto" />
-            <hr className="my-4" />
-            <div
-              className={`mt-10 ${isDarkMode ? "opacity-50" : "opacity-90"}`}
-            >
-              No space yet, add a new one?
+        <div className={`flex ${!spaces && "justify-center"} my-10`}>
+          {spaces ? (
+            <SpaceCard content={"hello"}/>
+          ) : (
+            <div className="text-center">
+              <FaTree size={200} className="mx-auto" />
+              <hr className="my-4" />
+              <div
+                className={`mt-10 ${isDarkMode ? "opacity-50" : "opacity-90"}`}
+              >
+                No space yet, add a new one?
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
     </div>
