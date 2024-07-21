@@ -12,7 +12,7 @@ interface MyContextType {
 const MyContext = createContext<MyContextType | undefined>(undefined);
 
 export const MyProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
 
   return (
