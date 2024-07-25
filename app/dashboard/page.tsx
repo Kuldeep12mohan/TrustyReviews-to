@@ -1,19 +1,42 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaPlus, FaTree } from "react-icons/fa";
 import { useMyContext } from "@/context";
 import { NavBar } from "@/components/NavBar";
 import Card from "@/components/Card";
 import { useRouter } from "next/navigation";
 import SpaceCard from "@/components/SpaceCard";
+import axios from "axios";
+export interface space {
+  id: string;
+  userId: string;
+  name: string;
+  logo: string;
+  customMessage: string;
+  header: string;
+}
 const Dashboard = () => {
   const { isDarkMode } = useMyContext();
   const router = useRouter();
-  const [spaces, setSpaces] = useState(true);
+  const [spaces, setSpaces] = useState<space[]>([]);
+
+  useEffect(() => {
+    const fetchSpaces = async () => {
+      try {
+        const res = await axios.get(
+          `/api/spaces/get/bulk?userId=${localStorage.getItem("userId")}`
+        );
+        setSpaces(res.data.spaces);
+      } catch (error) {
+        console.error("Error fetching spaces:", error);
+      }
+    };
+    fetchSpaces();
+  }, []);
 
   return (
     <div
-      className={`min-h-screen py-2 ${
+      className={`min-h-screen ${
         isDarkMode ? "bg-slate-950 text-white" : "bg-white text-black"
       }`}
     >
@@ -33,11 +56,22 @@ const Dashboard = () => {
             <span className="hidden md:block">Create a new space</span>
           </button>
         </div>
-        <div className={`flex ${!spaces && "justify-center"} my-10`}>
-          {spaces ? (
-            <SpaceCard content={"hello"}/>
+        <div>
+          {spaces.length > 0 ? (
+            <div className="grid grid-cols-1 gap-10 py-4">
+              {spaces.map((space, index) => (
+                  <SpaceCard
+                    key={index}
+                    id={space.id}
+                    name={space.name}
+                    logo={space.logo}
+                    header={space.header}
+                    customMessage={space.customMessage}
+                  />
+              ))}
+            </div>
           ) : (
-            <div className="text-center">
+            <div className="flex flex-col items-center">
               <FaTree size={200} className="mx-auto" />
               <hr className="my-4" />
               <div

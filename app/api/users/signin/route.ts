@@ -19,7 +19,7 @@ export const POST = async (request: NextRequest) => {
     const isPasswordCorrect = compareSync(password, user.password);
 
     if (isPasswordCorrect) {
-      return NextResponse.json({ message: "User logged in successfully" });
+      return NextResponse.json({ message: "User logged in successfully",user });
     } else {
       return NextResponse.json({ error: "Incorrect password" }, { status: 401 });
     }

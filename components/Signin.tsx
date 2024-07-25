@@ -20,7 +20,7 @@ const SignInComponent = () => {
     try {
       const res = await axios.post("/api/users/signin",{email,password})
       console.log(res);
-      localStorage.setItem("userId", res.data.user?.id || "");
+      localStorage.setItem("userId", res.data.user?.id);
       setEmail("");
       setPassword("");
       router.push("/dashboard");

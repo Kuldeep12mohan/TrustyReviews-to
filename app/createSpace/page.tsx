@@ -4,8 +4,9 @@ import { useMyContext } from "@/context";
 import axios from "axios";
 import React, { useRef, useEffect, useState, ChangeEvent } from "react";
 import toast, { Toaster } from "react-hot-toast";
-
+import { useRouter } from "next/navigation";
 const Page: React.FC = () => {
+  const router = useRouter();
   const { isDarkMode } = useMyContext();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [logo, setLogo] = useState<string | null>(null);
@@ -29,6 +30,9 @@ const Page: React.FC = () => {
       });
       console.log(res);
       toast.success("Space created successfully!");
+      setTimeout(()=>{
+        router.push("/dashboard")
+      },1000)
     } catch (error) {
       console.error(error);
       toast.error("Space creation failed");
