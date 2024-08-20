@@ -35,6 +35,7 @@ model Space {
 model Testimonial {
   id           String  @id @default(uuid())
   username     String
+  email        String
   textContent  String?
   videoContent String?
   space        Space   @relation(fields: [spaceId], references: [id])

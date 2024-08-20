@@ -22,7 +22,7 @@ const TestimonialCard = () => {
           Text
         </button>
         <div></div>
-        <FaHeart onClick={toggle} className={`${heart && 'text-red-500'} hover:cursor-pointer`} />
+        <FaHeart size={24} onClick={toggle} className={`${heart && 'text-red-500'} hover:cursor-pointer`} />
       </div>
       <div className="flex mb-4">
         <FaStar className="text-yellow-500" />
